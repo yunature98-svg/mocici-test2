@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
+<html lang="zh-CN"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOCICI 精神健身房 · 精神体质类型测评</title>
@@ -157,7 +155,7 @@
                     <div class="flex justify-between items-center mb-4">
                         <span id="dimension-tag" class="hidden"></span>
                     </div>
-                    <h3 id="question-text" class="text-xl font-medium mb-8 text-center">我内心一有情绪波动，自己马上就能察觉到。</h3>
+                    <h3 id="question-text" class="text-xl font-medium mb-8 text-center">我心里一有点不爽，自己马上就能察觉到。</h3>
                     
                     <div class="flex justify-between items-center mb-4">
                         <span class="text-sm text-gray-500">完全不符合</span>
@@ -300,6 +298,8 @@
                     <p id="progress-comment" class="text-gray-700 text-center">注意休息和调整，有时候退步是进步的一部分。</p>
                 </div>
                 
+
+                
                 <!-- 专属冥想训练处方 -->
                 <div class="card mb-8 fade-in" style="animation-delay: 0.6s">
                     <h3 class="text-lg font-semibold mb-4 text-center">专属冥想训练处方</h3>
@@ -316,16 +316,15 @@
                     </div>
                 </div>
                 
+
+                
                 <!-- 分享按钮 -->
                 <div class="mb-8 fade-in" style="animation-delay: 0.6s">
                     <div class="card mb-4">
                         <h3 class="text-lg font-semibold mb-4 text-center">分享文案</h3>
                         <p id="share-text" class="text-gray-700 text-center mb-4"></p>
-                        <button id="copy-share" class="btn-primary w-full mb-4">
+                        <button id="copy-share" class="btn-primary w-full">
                             <i class="fa fa-copy mr-2"></i> 复制分享语
-                        </button>
-                        <button id="one-click-share" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 w-full">
-                            一键分享我的结果，邀请朋友测精神体质
                         </button>
                     </div>
                 </div>
@@ -346,7 +345,7 @@
         // 问题数据
         const questions = [
             // 觉察力 A
-            { text: "我内心一有情绪波动，自己马上就能察觉到。", dimension: "A" },
+            { text: "我心里一有情绪波动，自己马上就能察觉到。", dimension: "A" },
             { text: "我一发呆跑神，脑子里会立刻 \"叮\" 一下意识到。", dimension: "A" },
             { text: "我分得清「有点小情绪」和「情绪把我整个人带走了」。", dimension: "A" },
             { text: "我一紧张，就能感觉到身体哪里发紧、发酸、不对劲。", dimension: "A" },
@@ -701,6 +700,7 @@
             const question = questions[index];
             
             // 维度标签已隐藏，不再更新
+            
             questionText.textContent = question.text;
             currentQuestionSpan.textContent = index + 1;
             
@@ -854,25 +854,6 @@
             const randomShareText = shareTexts[Math.floor(Math.random() * shareTexts.length)];
             document.getElementById('share-text').textContent = randomShareText;
             
-            // 绑定一键分享事件（只在结果页显示后绑定）
-            document.getElementById('one-click-share').addEventListener('click', function() {
-                // 一键分享核心逻辑：复制带邀请的文案
-                const shareText = `我测完了！快来测测你的精神体质 → 我的结果是：${personality.title} ${window.location.href}`;
-                navigator.clipboard.writeText(shareText);
-                
-                // 按钮反馈
-                const originalText = this.innerHTML;
-                this.innerHTML = '<i class="fa fa-check mr-2"></i> 分享文案已复制';
-                this.classList.add('bg-green-500');
-                this.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                    this.classList.remove('bg-green-500');
-                    this.classList.add('bg-blue-500', 'hover:bg-blue-600');
-                }, 2000);
-            });
-            
             // 创建雷达图
             createRadarChart(averages);
             
@@ -880,7 +861,7 @@
             createHistoryChart();
         }
         
-        // 显示维度等级（修复：去掉不存在的DOM元素赋值）
+        // 显示维度等级
         function displayDimensionLevels(averages) {
             const dimensions = [
                 { key: 'A', name: '觉察力', score: averages.A },
@@ -900,6 +881,13 @@
                 tag.className = `${level.color} text-white px-3 py-1 rounded-full text-sm font-medium`;
                 tag.textContent = `${dim.name} ${level.level}`;
                 document.getElementById('level-tags').appendChild(tag);
+                
+                // 设置等级文本
+                const levelElement = document.getElementById(`${dim.name.toLowerCase()}-level`);
+                if (levelElement) {
+                    levelElement.textContent = `${level.level} ${level.text}`;
+                    levelElement.className = `text-lg font-semibold ${level.color.replace('bg-', 'text-')}`;
+                }
             });
         }
         
@@ -1172,5 +1160,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 
-</body>
-</html>
+</body></html>
