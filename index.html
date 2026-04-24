@@ -247,6 +247,15 @@
                     </div>
                 </div>
                 
+                <!-- 总分显示 -->
+                <div class="card mb-8 fade-in" style="animation-delay: 0.3s">
+                    <h3 class="text-lg font-semibold mb-4 text-center">总分</h3>
+                    <div class="text-center">
+                        <p id="total-score" class="text-4xl font-bold text-gray-800 mb-2"></p>
+                        <p class="text-gray-600">满分：96分</p>
+                    </div>
+                </div>
+                
                 <!-- 历史趋势图 -->
                 <div class="card mb-8 fade-in" style="animation-delay: 0.4s">
                     <h3 class="text-lg font-semibold mb-4 text-center">历史总分趋势</h3>
@@ -300,8 +309,8 @@
                 
 
                 
-                <!-- 专属冥想训练处方 -->
-                <div class="card mb-8 fade-in" style="animation-delay: 0.6s">
+                <!-- 专属冥想训练处方 (暂时隐藏) -->
+                <div class="card mb-8 fade-in" style="animation-delay: 0.6s; display: none;">
                     <h3 class="text-lg font-semibold mb-4 text-center">专属冥想训练处方</h3>
                     <div id="meditation-prescription" class="space-y-3">
                         <!-- 处方内容将在这里动态生成 -->
@@ -832,6 +841,9 @@
             document.getElementById('stability-score').textContent = averages.S.toFixed(1);
             document.getElementById('focus-score').textContent = averages.F.toFixed(1);
             document.getElementById('restoration-score').textContent = averages.R.toFixed(1);
+            
+            // 设置总分
+            document.getElementById('total-score').textContent = totalScore;
             
             // 1. 显示ASFR四维度等级
             displayDimensionLevels(averages);
